@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import Iyzipay from "iyzipay";
 
-const iyzipay = new Iyzipay({
-  apiKey: process.env.IYZICO_API_KEY || "sandbox-dummy",
-  secretKey: process.env.IYZICO_SECRET_KEY || "sandbox-dummy",
-  uri: process.env.IYZICO_BASE_URL || "https://sandbox-api.iyzipay.com"
-});
-
 export async function POST(req: Request) {
   try {
+    const iyzipay = new Iyzipay({
+      apiKey: process.env.IYZICO_API_KEY || "sandbox-dummy",
+      secretKey: process.env.IYZICO_SECRET_KEY || "sandbox-dummy",
+      uri: process.env.IYZICO_BASE_URL || "https://sandbox-api.iyzipay.com"
+    });
+    
     const body = await req.json();
 
     const request = {

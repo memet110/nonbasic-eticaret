@@ -2,19 +2,18 @@ import { NextResponse } from "next/server";
 import Iyzipay from "iyzipay";
 import { createClient } from "@supabase/supabase-js";
 
-// Use service role to bypass RLS for creating orders securely on backend
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
-const iyzipay = new Iyzipay({
-  apiKey: process.env.IYZICO_API_KEY || "sandbox-dummy",
-  secretKey: process.env.IYZICO_SECRET_KEY || "sandbox-dummy",
-  uri: process.env.IYZICO_BASE_URL || "https://sandbox-api.iyzipay.com"
-});
-
 export async function POST(req: Request) {
   try {
+    // Initialize supabase client inside function to avoid build-time errors
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://dummy.supabase.co";
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "dummy";
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+    const iyzipay = new Iyzipay({
+      apiKey: process.env.IYZICO_API_KEY || "sandbox-dummy",
+      secretKey: process.env.IYZICO_SECRET_KEY || "sandbox-dummy",
+      uri: process.env.IYZICO_BASE_URL || "https://sandbox-api.iyzipay.com"
+    });
     // Iyzico sends token via POST body as form-data
     const formData = await req.formData();
     const token = formData.get("token") as string;
