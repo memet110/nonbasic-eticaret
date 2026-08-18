@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ["iyzipay"]
+  serverExternalPackages: ["iyzipay"],
+  outputFileTracingIncludes: {
+    '/api/iyzico/**/*': ['./node_modules/iyzipay/**/*'],
+  },
 };
 
 export default nextConfig;
