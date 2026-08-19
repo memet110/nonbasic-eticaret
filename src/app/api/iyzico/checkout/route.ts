@@ -3,6 +3,7 @@ import Iyzipay from "iyzipay";
 
 export async function POST(req: Request) {
   try {
+    require("postman-request");
     const iyzipay = new Iyzipay({
       apiKey: process.env.IYZICO_API_KEY || "sandbox-dummy",
       secretKey: process.env.IYZICO_SECRET_KEY || "sandbox-dummy",
