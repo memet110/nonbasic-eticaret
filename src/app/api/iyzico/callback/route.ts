@@ -2,9 +2,14 @@ import { NextResponse } from "next/server";
 import Iyzipay from "iyzipay";
 import { createClient } from "@supabase/supabase-js";
 
+// VERCEL HACK: Zorla dosyaları analiz ettir
+const dummyTrace = () => {
+  require("iyzipay/lib/IyzipayResource");
+  require("postman-request");
+};
+
 export async function POST(req: Request) {
   try {
-    require("postman-request");
     // Initialize supabase client inside function to avoid build-time errors
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://dummy.supabase.co";
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "dummy";
